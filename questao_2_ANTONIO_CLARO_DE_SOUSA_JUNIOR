@@ -1,0 +1,80 @@
+import csv
+
+from os.path import exists
+
+age = []
+sex = []
+cp = []
+trestbps = []
+chol = []
+fbs = []
+restecg = []
+thalrest = []
+exang = []
+oldpeak = []
+slope = []
+ca = []
+thal = []
+num = []
+
+
+def readCSV():
+    if exists("data.csv"):
+        with open("data.csv") as f:
+            reader = csv.reader(f, delimiter=',')
+            next(reader)
+
+            for line in reader:
+                age.append(line[0])
+                sex.append(line[1])
+                cp.append(line[2])
+                trestbps.append(line[3])
+                chol.append(line[4])
+                fbs.append(line[5])
+                restecg.append(line[6])
+                thalrest.append(line[7])
+                exang.append(line[8])
+                oldpeak.append(line[9])
+                slope.append(line[10])
+                ca.append(line[11])
+                thal.append(line[12])
+                num.append(line[13])
+
+
+def questao1():
+    total = 0;
+    amount = len(age)
+    for i in range(amount):
+        if float(age[i]) > 40 and float(chol[i]) > 240:
+            total += 1
+    total = round((total*100)/amount, 2)
+    print("1) A porcentagem total de pessoa com mais de 40 anos de idade com colesterol alto é: " + str(total))
+    print()
+
+def questao2():
+    total = 0;
+    amount = len(age)
+    for i in range(amount):
+        if float(age[i]) > 40 and float(chol[i]) > 240 and fbs[i] == '1.0':
+            total += 1
+    total = round((total * 100) / amount, 2)
+    print("2) A porcentagem total de pessoa com mais de 40 anos de idade com colesterol alto e alto teor de açucar no sangue é: " + str(total))
+    print()
+
+def questao3():
+    total_chol_fbs = 0;
+    total_chol_fbs_restecg = 0
+    amount = len(age)
+    for i in range(amount):
+        if float(chol[i]) > 240 and fbs[i] == '1.0':
+            total_chol_fbs += 1
+    for i in range(amount):
+        if float(chol[i]) > 240 and fbs[i] == '1.0' and restecg[i] == '2.0':
+            total_chol_fbs_restecg += 1
+    print("3) Visto que entre as " + str(total_chol_fbs) + " pessoas que possuem colesterol alto e alto teor de açucar no sangue, " + str(total_chol_fbs_restecg) + " delas desenvolveram hipertrofia ventricular esquerda do coração")
+    print("   É possivel afirmar que colesterol alto junto com o alto teor de açucar no sangue pode sim estar relacionado com o desenvolvimento de hipertrofia ventricular esquerdo do coração. ")
+
+readCSV()
+questao1()
+questao2()
+questao3()
